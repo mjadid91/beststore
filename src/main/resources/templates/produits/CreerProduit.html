@@ -12,6 +12,22 @@
     <link rel="stylesheet" th:href="@{/css/style.css}">
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="/">BestStore</a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarMenu">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarMenu">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center">
+                <li class="nav-item mx-2">
+                    <a class="nav-link" href="/produits">Produits</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
 
 <div class="container d-flex justify-content-center align-items-start py-5">
     <div class="col-md-8 col-lg-7 card card-form p-4 shadow-sm">

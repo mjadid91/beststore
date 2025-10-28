@@ -13,6 +13,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -113,42 +114,42 @@ public class ProduitsController {
     }
 
     @PostMapping("/modifier/{id}")
-    public String modifierProduit(@PathVariable int id,
-                                  @Valid @ModelAttribute ProduitDto produitDto,
-                                  BindingResult result) {
+    public String modifierProduit(
+            Model model,
+            @PathVariable int id,                  // <- PathVariable pour l'ID
+            @Valid @ModelAttribute ProduitDto produitDto,
+            BindingResult result) {
 
+        // Cherche le produit
         Produit produit = repo.findById(id).orElse(null);
         if (produit == null) {
             return "redirect:/produits";
         }
 
+        // Gestion des erreurs de validation
         if (result.hasErrors()) {
             return "produits/ModifierProduit";
         }
 
-        // si une nouvelle image est uploadée
-        if (produitDto.getFichierImage() != null && !produitDto.getFichierImage().isEmpty()) {
-            MultipartFile image = produitDto.getFichierImage();
-            String stockageImage = new Date().getTime() + "_" + image.getOriginalFilename();
-
+        // Gestion upload image
+        MultipartFile image = produitDto.getFichierImage();
+        if (image != null && !image.isEmpty()) {
+            String stockageImage = System.currentTimeMillis() + "_" + image.getOriginalFilename();
             try {
-                String uploadDir = "public/images/";
-                Path uploadPath = Path.of(uploadDir);
-
+                Path uploadPath = Path.of("public/images/");
                 if (!Files.exists(uploadPath)) {
                     Files.createDirectories(uploadPath);
                 }
-
                 try (InputStream inputStream = image.getInputStream()) {
-                    Files.copy(inputStream, Paths.get(uploadDir + stockageImage), StandardCopyOption.REPLACE_EXISTING);
+                    Files.copy(inputStream, uploadPath.resolve(stockageImage), StandardCopyOption.REPLACE_EXISTING);
                 }
                 produit.setNomFichierImage(stockageImage);
-
-            } catch (Exception e) {
+            } catch (IOException e) {
                 System.out.println("Erreur lors de l'upload de l'image : " + e.getMessage());
             }
         }
 
+        // Mise à jour du produit
         produit.setNom(produitDto.getNom());
         produit.setMarque(produitDto.getMarque());
         produit.setCategorie(produitDto.getCategorie());
@@ -160,12 +161,24 @@ public class ProduitsController {
         return "redirect:/produits";
     }
 
+
     @GetMapping("/supprimer/{id}")
     public String supprimerProduit(@PathVariable int id) {
-        Produit produit = repo.findById(id).orElse(null);
-        if (produit != null) {
-            repo.delete(produit);
+        try {
+            Produit produit = repo.findById(id).orElse(null);
+            if (produit != null) {
+                Path imagePath = Paths.get("public/images/" + produit.getNomFichierImage());
+                try {
+                    Files.deleteIfExists(imagePath);
+                } catch (Exception e) {
+                    System.out.println("Erreur lors de la suppression de l'image : " + e.getMessage());
+                }
+                repo.delete(produit);
+            }
+        } catch (Exception e) {
+            System.out.println("Produit introuvable : " + e.getMessage());
         }
         return "redirect:/produits";
     }
+
 }

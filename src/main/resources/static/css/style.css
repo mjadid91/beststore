@@ -9,7 +9,7 @@
 /* Body général */
 body {
     background-color: var(--bg-color);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Poppins', sans-serif;
 }
 
 /* Card générale */
@@ -72,4 +72,21 @@ body {
 /* Textarea plus grande */
 textarea.form-control {
     min-height: 120px;
+}
+
+/* Bouton Créer Produit */
+.btn-create {
+    background-color: #4dd0e1;
+    color: #000;
+    font-weight: 600;
+    border-radius: 50px;
+    padding: 0.5rem 1.5rem;
+    transition: background-color 0.3s, transform 0.2s;
+    text-decoration: none;
+}
+
+.btn-create:hover {
+    background-color: #26c6da;
+    color: #000;
+    transform: translateY(-2px);
 }

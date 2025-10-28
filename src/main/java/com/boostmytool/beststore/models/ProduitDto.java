@@ -3,7 +3,11 @@ package com.boostmytool.beststore.models;
 import jakarta.validation.constraints.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.Date;
+
 public class ProduitDto {
+    private Integer id;
+
     @NotEmpty(message = "Le nom du produit est obligatoire")
     private String nom;
 
@@ -21,6 +25,18 @@ public class ProduitDto {
     private String description;
 
     private MultipartFile fichierImage;
+
+    private String nomFichierImage;
+
+    private Date dateCreation;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
     public String getNom() {
         return nom;
@@ -68,5 +84,21 @@ public class ProduitDto {
 
     public void setFichierImage(MultipartFile fichierImage) {
         this.fichierImage = fichierImage;
+    }
+
+    public String getNomFichierImage() {
+        return nomFichierImage;
+    }
+
+    public void setNomFichierImage(String nomFichierImage) {
+        this.nomFichierImage = nomFichierImage;
+    }
+
+    public Date getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(Date dateCreation) {
+        this.dateCreation = dateCreation;
     }
 }

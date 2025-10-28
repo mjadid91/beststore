@@ -1,0 +1,75 @@
+/* Couleurs principales */
+:root {
+    --main-color: #4e73df;
+    --main-hover: #2e59d9;
+    --bg-color: #f2f4f8; /* Couleur de fond générale */
+    --card-bg: #ffffff;
+}
+
+/* Body général */
+body {
+    background-color: var(--bg-color);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Card générale */
+.card, .card-table, .card-form {
+    background-color: var(--card-bg);
+    border: none; /* On enlève les bordures pour un look plus moderne */
+    border-radius: 12px; /* Un peu plus arrondi */
+    box-shadow: 0 6px 18px rgba(0,0,0,0.07); /* Ombre plus douce */
+    padding: 30px;
+    margin-bottom: 20px;
+}
+
+/* Boutons principaux */
+.btn-main, .btn-primary {
+    background-color: var(--main-color) !important;
+    border-color: var(--main-color) !important;
+    color: white;
+    transition: all 0.3s;
+    border-radius: 8px; /* Arrondi pour les boutons */
+}
+.btn-main:hover, .btn-primary:hover {
+    background-color: var(--main-hover) !important;
+    border-color: var(--main-hover) !important;
+    transform: translateY(-2px); /* Léger effet au survol */
+    box-shadow: 0 4px 10px rgba(46, 89, 217, 0.3);
+}
+
+/* Boutons secondaires (Annuler) */
+.btn-outline-secondary {
+    border-radius: 8px;
+    transition: all 0.3s;
+}
+.btn-outline-secondary:hover {
+    background-color: #6c757d;
+    color: white;
+}
+
+/* Form inputs */
+.form-control, .form-select, textarea.form-control {
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+}
+.form-control:focus, .form-select:focus {
+    border-color: var(--main-color);
+    box-shadow: 0 0 0 0.25rem rgba(78, 115, 223, 0.25);
+}
+
+/* Table */
+.table img {
+    border-radius: 10px;
+    max-width: 80px;
+}
+.table-hover tbody tr:hover {
+    background-color: rgba(78, 115, 223, 0.05);
+}
+.table thead {
+    background-color: #f8f9fa; /* En-tête de table plus clair */
+}
+
+/* Textarea plus grande */
+textarea.form-control {
+    min-height: 120px;
+}
